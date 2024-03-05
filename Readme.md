@@ -1,0 +1,1 @@
+docker run  -p 9900:80 -v .:/usr/share/nginx/html:ro nginx
