@@ -39,6 +39,12 @@ if (!function_exists('getenv_docker')) {
 	}
 }
 
+// Helper function to convert environment variable to boolean using filter_var
+function getenv_docker_bool($env, $default = false) {
+    $val = getenv_docker($env, '');
+    return filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default;
+}
+
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'WP_AUTO_UPDATE_CORE', false );
@@ -108,7 +114,7 @@ $table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
  *
  * @link https://wordpress.org/documentation/article/debugging-in-wordpress/
  */
-define( 'WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', true) );
+define('WP_DEBUG', getenv_docker_bool('WORDPRESS_DEBUG', false));
 
 /* Add any custom values between this line and the "stop editing" line. */
 
